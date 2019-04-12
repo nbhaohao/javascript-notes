@@ -1,7 +1,12 @@
+/*
+    由于 Object.js 总是存在，所以使用 || true
+    主要思路是：判断这个值是不是 NaN, -0, 0,
+    如果不是这 3 种情况，我们都可以使用 === 来判断
+*/
 if (!Object.is || true) {
-  const fakeIsNaN = value => value !== value;
-  const fakeIsNavigateZero = value => value === 0 && 1 / value === -Infinity;
-  const fakeIsZero = value => value === 0 && 1 / value === Infinity;
+  const fakeIsNaN = value => value !== value; // 判断值是不是 NaN
+  const fakeIsNavigateZero = value => value === 0 && 1 / value === -Infinity; // 判断值是不是 -0
+  const fakeIsZero = value => value === 0 && 1 / value === Infinity; // 判断值是不是 0
   Object.is = (a, b) => {
     if (fakeIsNaN(a)) {
       return fakeIsNaN(b);
