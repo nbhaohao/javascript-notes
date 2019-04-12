@@ -4,3 +4,5 @@
 [基础类型与 typeof](<https://github.com/nbhaohao/javascript-notes/issues/1>)
 
 [NaN](<https://github.com/nbhaohao/javascript-notes/issues/2>)
+
+[-0](<https://github.com/nbhaohao/javascript-notes/issues/3>)
