@@ -12,3 +12,5 @@
 [JavaScript 代码的编译和执行](<https://github.com/nbhaohao/javascript-notes/issues/5>)
 
 [变量提升骗局](<https://github.com/nbhaohao/javascript-notes/issues/6>)
+
+[this](<https://github.com/nbhaohao/javascript-notes/issues/7>)
