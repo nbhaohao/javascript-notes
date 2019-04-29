@@ -14,3 +14,5 @@
 [变量提升骗局](<https://github.com/nbhaohao/javascript-notes/issues/6>)
 
 [this](<https://github.com/nbhaohao/javascript-notes/issues/7>)
+
+[JavaScript 原型系统](<https://github.com/nbhaohao/javascript-notes/issues/8>)
