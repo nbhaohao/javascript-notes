@@ -16,3 +16,5 @@
 [this](<https://github.com/nbhaohao/javascript-notes/issues/7>)
 
 [JavaScript 原型系统](<https://github.com/nbhaohao/javascript-notes/issues/8>)
+
+[CommonJS模块 和 ES模块](https://github.com/nbhaohao/javascript-notes/issues/9)
