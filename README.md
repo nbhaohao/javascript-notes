@@ -18,3 +18,5 @@
 [JavaScript 原型系统](<https://github.com/nbhaohao/javascript-notes/issues/8>)
 
 [CommonJS模块 和 ES模块](https://github.com/nbhaohao/javascript-notes/issues/9)
+
+[微信 JS-SDK 本地调试](https://github.com/nbhaohao/javascript-notes/issues/10)
