@@ -22,3 +22,5 @@
 [微信 JS-SDK 本地调试](https://github.com/nbhaohao/javascript-notes/issues/10)
 
 [Function.length](https://github.com/nbhaohao/javascript-notes/issues/11)
+
+[递归、柯里化](https://github.com/nbhaohao/javascript-notes/issues/12)
