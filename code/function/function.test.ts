@@ -10,7 +10,7 @@ import {
   currify
 } from "./function";
 describe("测试 function 的函数", () => {
-  const util_test_fac = fn => {
+  const util_test_fac = (fn: any) => {
     expect(fn(1)).toBe(1);
     expect(fn(2)).toBe(2);
     expect(fn(3)).toBe(6);

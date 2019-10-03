@@ -31,9 +31,20 @@ export const fac_loop = (n: number) => {
   }
 };
 
+interface MemorizeCache {
+  (key: any, ...args: Array<any>): any;
+  cache: {
+    [key: string]: any;
+  };
+}
+
 // 记忆化函数 (这里用第一个参数作为 key 只是方便演示，真实情况下可能需要 equal 所有参数)
-export const memo = fn => {
-  const memorize = function(key, ...args) {
+export const memo = (fn: any) => {
+  const memorize: MemorizeCache = function(
+    this: any,
+    key: any,
+    ...args: Array<any>
+  ) {
     if (!(key in memorize.cache)) {
       memorize.cache[key] = fn.apply(this, [key, ...args]);
     }
@@ -44,13 +55,14 @@ export const memo = fn => {
 };
 
 // 柯里化函数
-export const add = (a, b) => a + b;
-export const add_curried = a => b => a + b;
-export const addThree = (a, b, c) => a + b + c;
-export const addThree_curried = a => b => c => a + b + c;
+export const add = (a: number, b: number) => a + b;
+export const add_curried = (a: number) => (b: number) => a + b;
+export const addThree = (a: number, b: number, c: number) => a + b + c;
+export const addThree_curried = (a: number) => (b: number) => (c: number) =>
+  a + b + c;
 
-export const currify = (fn, params = []) => {
-  return (...args) => {
+export const currify = (fn: any, params: Array<any> = []) => {
+  return (...args: Array<any>) => {
     if (args.length + params.length === fn.length) {
       return fn(...params, ...args);
     }
