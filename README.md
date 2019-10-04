@@ -24,3 +24,5 @@
 [Function.length](https://github.com/nbhaohao/javascript-notes/issues/11)
 
 [递归、柯里化](https://github.com/nbhaohao/javascript-notes/issues/12)
+
+[深拷贝](https://github.com/nbhaohao/javascript-notes/blob/master/code/deep-clone/deep-clone.ts)
