@@ -165,7 +165,7 @@ describe("Promise 测试用例", () => {
       expect(fn3).toHaveBeenCalledTimes(1);
       expect(callOrderArray).toEqual(["fn1", "fn2", "fn3"]);
       done();
-    }, 1000);
+    }, 50);
   });
   it("2.2.6.2 then 传入 onRejected 可以在同一个promise里被多次调用", done => {
     const promise = new Promise2((resolve: any, reject: any) => {
@@ -190,6 +190,174 @@ describe("Promise 测试用例", () => {
       expect(fn3).toHaveBeenCalledTimes(1);
       expect(callOrderArray).toEqual(["fn1", "fn2", "fn3"]);
       done();
-    }, 1000);
+    }, 50);
+  });
+  it("2.2.7 then必须返回一个promise", () => {
+    const promise = new Promise2((resolve: any) => {
+      resolve();
+    });
+    const promiseReturnValue = promise.then(() => {}, () => {});
+    expect(promiseReturnValue).toBeInstanceOf(Promise2);
+  });
+  it("2.2.7.1 如果onFulfilled返回一个值x, 运行 [[Resolve]](promise2, x)", done => {
+    const promise = new Promise2((resolve: any) => {
+      resolve();
+    });
+    promise
+      .then(() => {
+        return "123";
+      })
+      .then((prevResult: any) => {
+        expect(prevResult).toBe("123");
+        done();
+      });
+  });
+  it("2.3.1 如果promise和 then 的返回值引用同一个对象，则会抛出异常", done => {
+    const promise = new Promise2((resolve: any) => {
+      resolve();
+    });
+    const tempPromise = promise.then(() => {
+      return tempPromise;
+    });
+    tempPromise.then(null, (error: any) => {
+      expect(error).toBeInstanceOf(TypeError);
+      done();
+    });
+  });
+  it("2.3.2.1 如果Promise 成功 onFulfilled 的返回值是一个 promise, 那么返回的 promise 要等这个 promise 结束后，再执行", done => {
+    const callOrder: any[] = [];
+    const fakeFn1 = jest.fn(() => {
+      callOrder.push("fn1");
+    });
+    const fakeFn2 = jest.fn(() => {
+      callOrder.push("fn2");
+    });
+    const promise = new Promise2((resolve: any) => {
+      resolve();
+    });
+    promise
+      .then(() => {
+        return new Promise2((resolve: any) => {
+          setTimeout(() => {
+            fakeFn1();
+            resolve();
+          }, 20);
+        });
+      })
+      .then(() => {
+        fakeFn2();
+        expect(callOrder).toEqual(["fn1", "fn2"]);
+        done();
+      });
+  });
+  it("2.3.2.1 如果Promise 成功 onRejected 的返回值是一个 promise, 那么返回的 promise 要等这个 promise 结束后，再执行", done => {
+    const callOrder: any[] = [];
+    const fakeFn1 = jest.fn(() => {
+      callOrder.push("fn1");
+    });
+    const fakeFn2 = jest.fn(() => {
+      callOrder.push("fn2");
+    });
+    const promise = new Promise2((resolve: any) => {
+      resolve();
+    });
+    promise
+      .then(() => {
+        return new Promise2((resolve: any, reject: any) => {
+          setTimeout(() => {
+            fakeFn1();
+            reject();
+          }, 20);
+        });
+      })
+      .then(null, () => {
+        fakeFn2();
+        expect(callOrder).toEqual(["fn1", "fn2"]);
+        done();
+      });
+  });
+  it("2.3.2.1 如果Promise 失败 onFulfilled 的返回值是一个 promise, 那么返回的 promise 要等这个 promise 结束后，再执行", done => {
+    const callOrder: any[] = [];
+    const fakeFn1 = jest.fn(() => {
+      callOrder.push("fn1");
+    });
+    const fakeFn2 = jest.fn(() => {
+      callOrder.push("fn2");
+    });
+    const promise = new Promise2((resolve: any, reject: any) => {
+      reject();
+    });
+    promise
+      .then(null, () => {
+        return new Promise2((resolve: any) => {
+          setTimeout(() => {
+            fakeFn1();
+            resolve();
+          }, 20);
+        });
+      })
+      .then(() => {
+        fakeFn2();
+        expect(callOrder).toEqual(["fn1", "fn2"]);
+        done();
+      });
+  });
+  it("2.3.2.1 如果Promise 失败 onRejected 的返回值是一个 promise, 那么返回的 promise 要等这个 promise 结束后，再执行", done => {
+    const callOrder: any[] = [];
+    const fakeFn1 = jest.fn(() => {
+      callOrder.push("fn1");
+    });
+    const fakeFn2 = jest.fn(() => {
+      callOrder.push("fn2");
+    });
+    const promise = new Promise2((resolve: any, reject: any) => {
+      reject();
+    });
+    promise
+      .then(null, () => {
+        return new Promise2((resolve: any, reject: any) => {
+          setTimeout(() => {
+            fakeFn1();
+            reject();
+          }, 20);
+        });
+      })
+      .then(null, () => {
+        fakeFn2();
+        expect(callOrder).toEqual(["fn1", "fn2"]);
+        done();
+      });
+  });
+  it("2.2.7.2 如果onFulfilled抛出一个异常e,promise2 必须被拒绝（rejected）并把e当作原因", done => {
+    const fakeFn = jest.fn();
+    const promise = new Promise2((resolve: any, reject: any) => {
+      resolve();
+    });
+    promise
+      .then(() => {
+        throw new Error("test");
+      })
+      .then(null, (e: any) => {
+        fakeFn();
+        expect(fakeFn).toHaveBeenCalledTimes(1);
+        expect(e.toString()).toContain("test");
+        done();
+      });
+  });
+  it("2.2.7.2 如果onRejected抛出一个异常e,promise2 必须被拒绝（rejected）并把e当作原因", done => {
+    const fakeFn = jest.fn();
+    const promise = new Promise2((resolve: any, reject: any) => {
+      reject();
+    });
+    promise
+      .then(null, () => {
+        throw new Error("test");
+      })
+      .then(null, (e: any) => {
+        fakeFn();
+        expect(fakeFn).toHaveBeenCalledTimes(1);
+        expect(e.toString()).toContain("test");
+        done();
+      });
   });
 });
