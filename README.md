@@ -26,3 +26,5 @@
 [递归、柯里化](https://github.com/nbhaohao/javascript-notes/issues/12)
 
 [深拷贝](https://github.com/nbhaohao/javascript-notes/blob/master/code/deep-clone/deep-clone.ts)
+
+[Promise 串行面试题](https://github.com/nbhaohao/javascript-notes/issues/13)
