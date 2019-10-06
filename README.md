@@ -28,3 +28,5 @@
 [深拷贝](https://github.com/nbhaohao/javascript-notes/blob/master/code/deep-clone/deep-clone.ts)
 
 [Promise 串行面试题](https://github.com/nbhaohao/javascript-notes/issues/13)
+
+[Event Loop](https://github.com/nbhaohao/javascript-notes/issues/14)
